@@ -43,9 +43,9 @@ class Adapter(private var data: List<CatBreed>) : RecyclerView.Adapter<Adapter.V
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataItem = data[position]
         holder.textView.text = dataItem.name// меняем свойства view(элементов в xml)
-        holder.textView2.text = "The origin is = " + dataItem.origin
+        holder.textView2.text = "The playfulness is = " + dataItem.playfulness
         holder.textView3.text = "The grooming is = " + dataItem.grooming
-        holder.textView4.text = "The intelligence is = " + dataItem.intelligence
+        holder.textView4.text = "The shedding is = " + dataItem.shedding
         Picasso.get().load(dataItem.imageLink).into(holder.imageView)
     }
     //`onBindViewHolder` - метод, который связывает данные с представлением внутри ViewHolder.
@@ -60,6 +60,10 @@ class Adapter(private var data: List<CatBreed>) : RecyclerView.Adapter<Adapter.V
     // который адаптер должен отобразить в RecyclerView. В данном случае, это количество элементов в списке data.
     //просто получение длинны массива через метод списка .size
 
+    fun clearData() {
+        data = emptyList() // Очищаем список данных
+        notifyDataSetChanged() // Уведомляем адаптер об изменениях
+    }
     //К сожелению в адаптере нет метода для обновления по этому создадим его
     fun updateData(newData: List<CatBreed>) {
         data = newData

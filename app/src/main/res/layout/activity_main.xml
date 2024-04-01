@@ -21,21 +21,73 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <Button
+            android:textSize="12sp"
+            android:layout_margin="4dp"
+            android:id="@+id/button_name"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_name_text"
+            android:textColor="@color/button_text_color"
+            android:background="@drawable/button_background" />
+
+        <Button
+            android:textSize="12sp"
+            android:layout_margin="4dp"
+            android:id="@+id/button_grooming"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_grooming_text"
+            android:textColor="@color/button_text_color"
+            android:background="@drawable/button_background" />
+
+        <Button
+            android:textSize="12sp"
+            android:layout_margin="4dp"
+            android:id="@+id/button_origin"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_origin_text"
+            android:textColor="@color/button_text_color"
+            android:background="@drawable/button_background" />
+
+        <Button
+            android:textSize="12sp"
+            android:layout_margin="4dp"
+            android:id="@+id/button_intelligence"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_intelligence_text"
+            android:textColor="@color/button_text_color"
+            android:background="@drawable/button_background" />
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_margin="5dp"
         android:id="@+id/main_activity_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
         android:background="@drawable/recycler_view_background"
+        android:clipToPadding="false"
         android:paddingStart="4dp"
-        android:paddingEnd="4dp"/>
+        android:paddingTop="8dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="8dp" />
 
     <Button
         android:layout_margin="5dp"
-        android:id="@+id/button"
+        android:id="@+id/search_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

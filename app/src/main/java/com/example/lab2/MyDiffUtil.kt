@@ -32,7 +32,7 @@ class MyDiffUtil(private val oldList: List<CatBreed>, private val newList: List<
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
         val oldItem = oldList[oldItemPosition]//получение старого элемента и нового через индексы
         val newItem = newList[newItemPosition]
-        return oldItem.name == newItem.name  && oldItem.imageLink == newItem.imageLink && oldItem.origin == newItem.origin && oldItem.grooming == newItem.grooming && oldItem.intelligence == newItem.intelligence
+        return oldItem.name == newItem.name  && oldItem.imageLink == newItem.imageLink && oldItem.playfulness == newItem.playfulness && oldItem.grooming == newItem.grooming && oldItem.shedding == newItem.shedding
         //возвращает равны ли содержания в  старом и новом элеменах или нет
     }
 }

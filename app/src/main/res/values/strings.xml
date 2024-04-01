@@ -8,4 +8,8 @@
     <string name="name">abyssinian</string>
     <string name="button">Search</string>
     <string name="name_hint">"write cat type name "</string>
+    <string name="button_name_text" >name</string>
+    <string name="button_grooming_text">grooming</string>
+    <string name="button_origin_text">playfulness</string>
+    <string name="button_intelligence_text">shedding</string>
 </resources>

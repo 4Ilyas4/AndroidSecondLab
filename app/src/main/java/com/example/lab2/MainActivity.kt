@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Job
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,8 +18,7 @@ class MainActivity : ComponentActivity() {// создаем класс MainActiv
     private lateinit var adapter: Adapter
     private val baseUrl = "https://api.api-ninjas.com/v1/"
     private lateinit var searchEditText: EditText
-    private lateinit var searchButton: Button
-
+    private var currentSearchJob: Job? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         // его методы lifecycle которые начинаются с on
         //Когда активность в Android создается заново после того, как она была уничтожена системой (например, из-за поворота экрана или из-за нехватки памяти),
@@ -40,10 +40,14 @@ class MainActivity : ComponentActivity() {// создаем класс MainActiv
 
         val apiKey = "Y8Ut/zBDC2VNFAoWkv7IIA==7pTETOGAVWBDT71h" // X-Api-Key для доступа к апи
 
-        var name : String = "abyssinian"//переменная имени породы кошки
+        var varSer: String = "name"
+        var name: String? = null
+        var grooming : String? = null
+        var playfulness: String? = null
+        var shedding: String? = null
 
-        fun performSearch(name: String) {
-            retrofitService.getCats(name, apiKey).enqueue(object : Callback<List<CatBreed>> {
+        fun performSearch(name: String?, grooming: String?, playfulness: String?, shedding: String?) {
+            retrofitService.getCats(name,grooming,playfulness,shedding,apiKey).enqueue(object : Callback<List<CatBreed>> {
                 //отправляет GET-запрос на сервер для получения списка пород кошек. Метод getCats принимает два параметра:
                 // name, который является именем породы кошки, и apiKey, который является вашим API-ключом.
                 override fun onResponse(
@@ -51,6 +55,7 @@ class MainActivity : ComponentActivity() {// создаем класс MainActiv
                     response: Response<List<CatBreed>>
                 ) {
                     if (response.isSuccessful) {
+                        adapter.clearData()
                         val catBreeds = response.body()
                         catBreeds?.let {// Это стандартный способ проверки, не является ли объект catBreeds равным null.
                             // Если catBreeds не равен null, то код внутри блока let будет выполнен.
@@ -71,15 +76,57 @@ class MainActivity : ComponentActivity() {// создаем класс MainActiv
                 //обработка ошибок
             })
         }
-
+        findViewById<Button>(R.id.button_name).setOnClickListener{
+            varSer = "name"
+        }
+        findViewById<Button>(R.id.button_grooming).setOnClickListener{
+            varSer = "grooming"
+        }
+        findViewById<Button>(R.id.button_origin).setOnClickListener{
+            varSer = "playfulness"
+        }
+        findViewById<Button>(R.id.button_intelligence).setOnClickListener{
+            varSer = "intelligence"
+        }
         searchEditText = findViewById(R.id.editTextText)
-        searchButton = findViewById(R.id.button)
-        searchButton.setOnClickListener {
-            val searchText = searchEditText.text.toString() // берем текст xml edit text элемента
-            // в который пишем name
-            if (searchText.isNotEmpty()) { // выполняем если текст не пустой
-                performSearch(searchText)//делаем прошлые процедуры по name значение которого в searchText
-                //только при вводе чего то
+        findViewById<Button>(R.id.search_button).setOnClickListener {
+            currentSearchJob?.cancel()// Прекращаем предыдущий поиск, если он активен
+            val varStr = searchEditText.text.toString() // берем текст xml edit text элемента
+            if (varStr.isNotEmpty()) {// выполняем если текст не пустой
+                when (varSer) {
+                    "name" -> {
+                        name = searchEditText.text.toString()
+                        grooming = null
+                        playfulness = null
+                        shedding = null
+                    }
+                    "grooming" -> {
+                        name = null
+                        grooming = searchEditText.text.toString()
+                        playfulness = null
+                        shedding = null
+                    }
+                    "playfulness" -> {
+                        name = null
+                        grooming = null
+                        playfulness = searchEditText.text.toString()
+                        shedding = null
+                    }
+                    "intelligence" -> {
+                        name = null
+                        grooming = null
+                        playfulness = null
+                        shedding = searchEditText.text.toString()
+                    }
+                    else -> {
+                        // Если varSer не равно "name" или "grooming"..., присваиваем null всем
+                        name = null
+                        grooming = null
+                        playfulness = null
+                        shedding = null
+                    }
+                }
+                performSearch(name,grooming,playfulness,shedding)
             } else {
                 Toast.makeText(this, "Введите имя породы кошки", Toast.LENGTH_SHORT).show()
             }

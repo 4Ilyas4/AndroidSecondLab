@@ -6,7 +6,13 @@ import retrofit2.http.Query
 
 interface CatApiService {
     @GET("cats")
-    fun getCats(@Query("name") name: String, @Header("X-Api-Key") apiKey: String): Call<List<CatBreed>>
+    fun getCats(
+        @Query("name") name: String?,
+        @Query("grooming") grooming: String?,
+        @Query("playfulness") playfulness: String?,
+        @Query("shedding") shedding: String?,
+        @Header("X-Api-Key") apiKey: String?
+    ): Call<List<CatBreed>>
 }
 
 //Этот код определяет интерфейс `CatApiService`, который предоставляет метод `getCats()`.
